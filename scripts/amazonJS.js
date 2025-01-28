@@ -1,4 +1,4 @@
-import {cart} from '../data/cart.js';
+import {cart, addToCart} from '../data/cart.js';
 import {products} from '../data/products.js';
 
 const gridd= document.querySelector('.products-grid');
@@ -58,62 +58,59 @@ products.forEach((item)=>{
 gridd.innerHTML=gridHtml;
 const addedMessageTimeouts={};
 
-const addToCartBtn = document.querySelectorAll('.add-to-cart-button');
 
-addToCartBtn.forEach((btn) => {
-  btn.addEventListener('click', () => {
-    const currentProduct = btn.dataset.productId;
-    const dropdownValue =Number(document.querySelector(`.dropdownQuantity${currentProduct}`).value);
-    const addedToCart=document.querySelector(`.added-to-cart-${currentProduct}`);
+
+function addedToCartAppear(currentProduct,addedToCart){
+  addedToCart.classList.add('addedToCartappear');
     
-    addedToCart.classList.add('addedToCartappear');
-    
-    const previousTimeoutId = addedMessageTimeouts[currentProduct];
-    if (previousTimeoutId) {
-      clearTimeout(previousTimeoutId);
-    }
+  const previousTimeoutId = addedMessageTimeouts[currentProduct];
+  if (previousTimeoutId) {
+    clearTimeout(previousTimeoutId);
+  }
 
-    const timeoutId = setTimeout(() => {
-      addedToCart.classList.remove('addedToCartappear');
-    }, 1000);
+  const timeoutId = setTimeout(() => {
+    addedToCart.classList.remove('addedToCartappear');
+  }, 1000);
 
-    // Save the timeoutId for this product
-    // so we can stop it later if we need to.
-    addedMessageTimeouts[currentProduct] = timeoutId;
-    
-    if (!currentProduct) {
-      console.log("Product ID is undefined");
-      return;
-    }
-    // Check if the product already exists in the cart
-    let productExists=null;
-    cart.forEach((itemm) => {
-      if (itemm.id === currentProduct) {
-        productExists = itemm;
-      }
-    });
-
-    if(productExists){
-        productExists.quantity += dropdownValue; // Increment quantity if it exists
-    }
-    else if (!productExists) {
-      cart.push({
-        id: currentProduct,
-        quantity: dropdownValue,
-        // Add additional product details here if needed
-      });
-    }
+  // Save the timeoutId for this product
+  // so we can stop it later if we need to.
+  addedMessageTimeouts[currentProduct] = timeoutId;
+}
 
 
-    let cartQuantityLength= 0;
-    cart.forEach((item)=>{
-    cartQuantityLength += item.quantity;
+
+function updateCartQuantity(){
+  let cartQuantityLength= 0;
+    cart.forEach((cartItem)=>{
+    cartQuantityLength += cartItem.quantity;
     })
     const cartQuantity = document.querySelector('.cart-quantity').innerHTML=cartQuantityLength;
     console.log(cartQuantity)
-    
-    
+}
 
+
+
+
+
+const addToCartBtn = document.querySelectorAll('.add-to-cart-button');
+
+addToCartBtn.forEach((btn) => {
+
+  btn.addEventListener('click', () => {
+    //getting the current product id
+    const currentProduct = btn.dataset.productId;
+    const dropdownValue =Number(document.querySelector(`.dropdownQuantity${currentProduct}`).value);
+    const addedToCart=document.querySelector(`.added-to-cart-${currentProduct}`);
+
+    if (!currentProduct) {
+      console.error("Product ID is undefined");
+      return;
+    }
+
+    addToCart(currentProduct,dropdownValue);
+    addedToCartAppear(currentProduct,addedToCart);
+    updateCartQuantity();
+  
     console.log(cart); // Output the updated cart
     
   });
