@@ -24,7 +24,7 @@ products.forEach((item)=>{
           </div>
 
           <div class="product-quantity-container">
-            <select>
+            <select class="dropdownQuantity${item.id}">
               <option selected value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -53,13 +53,13 @@ products.forEach((item)=>{
 
 
 gridd.innerHTML=gridHtml;
-console.log(gridd.innerHTML);
 
 const addToCartBtn = document.querySelectorAll('.add-to-cart-button');
 
 addToCartBtn.forEach((btn) => {
   btn.addEventListener('click', () => {
     const currentProduct = btn.dataset.productId;
+    const dropdownValue =Number(document.querySelector(`.dropdownQuantity${currentProduct}`).value);
     if (!currentProduct) {
       console.log("Product ID is undefined");
       return;
@@ -73,12 +73,12 @@ addToCartBtn.forEach((btn) => {
     });
 
     if(productExists){
-        productExists.quantity += 1; // Increment quantity if it exists
+        productExists.quantity += dropdownValue; // Increment quantity if it exists
     }
     else if (!productExists) {
       cart.push({
         id: currentProduct,
-        quantity: 1,
+        quantity: dropdownValue,
         // Add additional product details here if needed
       });
     }
