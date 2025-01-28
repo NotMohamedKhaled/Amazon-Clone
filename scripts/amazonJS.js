@@ -40,7 +40,7 @@ products.forEach((item)=>{
 
           <div class="product-spacer"></div>
 
-          <div class="added-to-cart">
+          <div class="added-to-cart added-to-cart-${item.id}">
             <img src="images/icons/checkmark.png">
             Added
           </div>
@@ -53,6 +53,7 @@ products.forEach((item)=>{
 
 
 gridd.innerHTML=gridHtml;
+const addedMessageTimeouts={};
 
 const addToCartBtn = document.querySelectorAll('.add-to-cart-button');
 
@@ -60,6 +61,23 @@ addToCartBtn.forEach((btn) => {
   btn.addEventListener('click', () => {
     const currentProduct = btn.dataset.productId;
     const dropdownValue =Number(document.querySelector(`.dropdownQuantity${currentProduct}`).value);
+    const addedToCart=document.querySelector(`.added-to-cart-${currentProduct}`);
+    
+    addedToCart.classList.add('addedToCartappear');
+    
+    const previousTimeoutId = addedMessageTimeouts[currentProduct];
+    if (previousTimeoutId) {
+      clearTimeout(previousTimeoutId);
+    }
+
+    const timeoutId = setTimeout(() => {
+      addedToCart.classList.remove('addedToCartappear');
+    }, 1000);
+
+    // Save the timeoutId for this product
+    // so we can stop it later if we need to.
+    addedMessageTimeouts[currentProduct] = timeoutId;
+    
     if (!currentProduct) {
       console.log("Product ID is undefined");
       return;
