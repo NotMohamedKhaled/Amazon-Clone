@@ -22,8 +22,18 @@ export function addToCart(currentProduct,dropdownValue){
       cart.push({
         productid: currentProduct,
         quantity: dropdownValue,
+
         // Add additional product details here if needed
       });
     }
    
+   }
+
+  export function deleteCartItem(productId){
+cart.forEach((cartItem,index)=>{
+    if(cartItem.productId===productId){
+        cart.splice(index,1);
+        return cart;
+    }
+})
    }

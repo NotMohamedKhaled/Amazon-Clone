@@ -1,8 +1,8 @@
-import {cart} from '../data/cart.js'
+import {cart,deleteCartItem} from '../data/cart.js'
 import { products } from '../data/products.js';
 
 let cartSummaryHtml='';
-cart.forEach((cartItem)=>{
+cart.forEach((cartItem,index)=>{
     const productId= cartItem.productId;
 
     let matchingProduct;
@@ -37,7 +37,7 @@ cartSummaryHtml+=
             <span class="update-quantity-link link-primary">
             Update
             </span>
-            <span class="delete-quantity-link link-primary">
+            <span class="delete-quantity-link link-primary" data-product-id="${productId}">
             Delete
             </span>
         </div>
@@ -50,7 +50,7 @@ cartSummaryHtml+=
         <div class="delivery-option">
             <input type="radio" checked
             class="delivery-option-input"
-            name="delivery-option-1">
+            name="delivery-option-${index}">
             <div>
             <div class="delivery-option-date">
                 Tuesday, June 21
@@ -63,7 +63,7 @@ cartSummaryHtml+=
         <div class="delivery-option">
             <input type="radio"
             class="delivery-option-input"
-            name="delivery-option-1">
+            name="delivery-option-${index}">
             <div>
             <div class="delivery-option-date">
                 Wednesday, June 15
@@ -76,7 +76,7 @@ cartSummaryHtml+=
         <div class="delivery-option">
             <input type="radio"
             class="delivery-option-input"
-            name="delivery-option-1">
+            name="delivery-option-${index}">
             <div>
             <div class="delivery-option-date">
                 Monday, June 13
@@ -90,4 +90,17 @@ cartSummaryHtml+=
     </div>
     </div>`;
 })
+
+
+
+
 document.querySelector('.order-summary').innerHTML=cartSummaryHtml;
+
+document.querySelectorAll('.delete-quantity-link').forEach((link)=>{
+    link.addEventListener('click',()=>{
+        const productId= link.dataset.productId;
+        deleteCartItem(productId);
+
+        // updateCheckoutHTML();
+    })
+})
