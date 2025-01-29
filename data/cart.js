@@ -1,4 +1,10 @@
-export const cart=[];
+export const cart=[{
+    productId: '1dsd',
+    quantity: 2,
+},{
+    productId: '2ds',
+    quantity: 1,
+}];
 
 export function addToCart(currentProduct,dropdownValue){
     // Check if the product already exists in the cart
@@ -14,7 +20,7 @@ export function addToCart(currentProduct,dropdownValue){
     }
     else if (!productExists) {
       cart.push({
-        id: currentProduct,
+        productid: currentProduct,
         quantity: dropdownValue,
         // Add additional product details here if needed
       });
