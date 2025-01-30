@@ -85,7 +85,6 @@ function updateCartQuantity(){
     cartQuantityLength += cartItem.quantity;
     })
     const cartQuantity = document.querySelector('.cart-quantity').innerHTML=cartQuantityLength;
-    console.log(cartQuantity)
 }
 
 
@@ -111,10 +110,10 @@ addToCartBtn.forEach((btn) => {
     addedToCartAppear(currentProduct,addedToCart);
     updateCartQuantity();
   
-    console.log(cart); // Output the updated cart
     
   });
 });
+updateCartQuantity();
 
 
 
