@@ -53,6 +53,7 @@
   margin-bottom: 12px;
 }
 
+
 .payment-summary {
   padding-bottom: 5px;
 }
@@ -117,6 +118,29 @@
 
 .product-quantity .link-primary {
   margin-left: 3px;
+}
+ .is-editing-quantity .update-quantity-link{
+  display: none;
+}
+.save-quantity{
+  display: none;
+}
+.quantity-input{
+  width: 30px;
+  display: none;
+}
+.is-editing-quantity  .save-quantity{
+display: initial;
+}
+.is-editing-quantity .quantity-input{
+display: initial;
+}
+.is-editing-quantity .quantity-label {
+  display: none;
+}
+
+.is-editing-quantity .update-quantity-link {
+  display: none;
 }
 
 @media (max-width: 1000px) {
