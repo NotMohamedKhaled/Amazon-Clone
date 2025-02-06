@@ -1,5 +1,5 @@
 // checkout.js
-import { cart, deleteCartItem,checkoutItemsQuantity,updateQuantity,saveToLocalStorage} from '../data/cart.js';
+import { cart,updateDeliveryOption, deleteCartItem,checkoutItemsQuantity,updateQuantity,saveToLocalStorage} from '../data/cart.js';
 import { products } from '../data/products.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import { deliveryOptions } from '../data/deliveryOptions.js';
@@ -13,11 +13,20 @@ function renderCartItems() {
   cart.forEach((cartItem, index) => {
     const productId = cartItem.productId;
     const matchingProduct = products.find((product) => product.id === productId);
-
+    const deliveryOptionId = cartItem.deliveryOptionId;
+    let deliveryoption = deliveryOptions.find((option) => option.id === deliveryOptionId);
+    if (!deliveryoption) {
+      console.error(`No delivery option found for ID: ${deliveryOptionId}`);
+      deliveryoption = deliveryOptions[0]; // Use the first option as a fallback
+    }
+    const deliveryDate =today.add(deliveryoption.deliveryDays,'days');
+     const dateHtml =(deliveryDate.format('dddd, MMMM D'));
     if (matchingProduct) {
+    
+
       cartSummaryHtml += `
         <div class="cart-item-container-${matchingProduct.id}">
-          <div class="delivery-date">Delivery date: Tuesday, June 21</div>
+          <div class="delivery-date">Delivery date: ${dateHtml}</div>
           <div class="cart-item-details-grid">
             <img class="product-image" src="${matchingProduct.image}">
             <div class="cart-item-details">
@@ -36,7 +45,7 @@ function renderCartItems() {
         <div class="delivery-options-title">
             Choose a delivery option:
         </div>
-        ${generateDeliveryHtml(index)}
+        ${generateDeliveryHtml(matchingProduct.id,index,cartItem)}
         </div>
     </div>
     </div>`;
@@ -59,18 +68,22 @@ function renderCartItems() {
   });
 }
 
-function generateDeliveryHtml(index){
+function generateDeliveryHtml(matchingProduct,index,cartItem){
   let html=``;
 
   deliveryOptions.forEach((option)=>{
 
   const deliveryDate =today.add(option.deliveryDays,'days');
   const dateHtml =(deliveryDate.format('dddd, MMMM D'));
-  const priceHtml= (option.priceCents===0?'Free ':(option.priceCents / 100).toFixed(2));
+  const priceHtml= (option.priceCents===0?'FREE ':'$'+(option.priceCents / 100).toFixed(2)+' -');
+   const isChecked=  option.id===cartItem.deliveryOptionId;
 
-
-    html+= `    <div class="delivery-option">
+    html+= `    <div class="delivery-option js-delivery-option"
+                    data-product-id="${matchingProduct}"
+                    data-delivery-option-id="${option.id}">
               <input type="radio"
+              ${isChecked?'checked':''}
+              
               class="delivery-option-input"
               name="delivery-option-${index}">
               <div>
@@ -78,7 +91,7 @@ function generateDeliveryHtml(index){
                 ${dateHtml}
               </div>
               <div class="delivery-option-price">
-                  ${priceHtml}- Shipping
+                  ${priceHtml} Shipping
               </div>
               </div>
               </div>
@@ -153,7 +166,16 @@ document.querySelectorAll('.quantity-input').forEach((input) => {
     }
   });
 });
-
-
 document.querySelector('.return-to-home-link').innerHTML=checkoutItemsQuantity();
+
+document.querySelectorAll('.js-delivery-option')
+.forEach((option)=>{
+  option.addEventListener('click',()=>{
+    const {productId,deliveryOptionId}=option.dataset;
+
+updateDeliveryOption(productId,deliveryOptionId)
+  });
+
+})
+
 

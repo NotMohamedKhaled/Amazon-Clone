@@ -1,5 +1,14 @@
 export let cart = JSON.parse(localStorage.getItem('cart')) || [
+ { productId: "1dsd",
+  quantity: 2,
+  deliveryOptionId: '2'
+ },
+ {
+  productId: "2ds",
+  quantity: 1,
+  deliveryOptionId: '1'
 
+ }
 ];
 
 export function saveToLocalStorage() {
@@ -22,7 +31,7 @@ export function addToCart(currentProduct,dropdownValue){
       cart.push({
         productId: currentProduct,
         quantity: dropdownValue,
-        deliveryOptionId: '1',
+        deliveryOptionId: '2',
         // Add additional product details here if needed
        
       });
@@ -67,4 +76,16 @@ cart.forEach((cartItem,index)=>{
 
   
     saveToLocalStorage();
+  }
+
+  export function updateDeliveryOption(productId,deliveryOptionId){
+    let productExists;
+    cart.forEach((cartItem) => {
+      if (cartItem.productId === productId) {
+        productExists = cartItem;
+      }
+    });
+    productExists.deliveryOptionId=deliveryOptionId;
+    saveToLocalStorage();
+   
   }
