@@ -66,7 +66,6 @@ function renderCartItems() {
      // renderCartItems(); // Re-render the cart after deletion
     });
   });
-}
 
 function generateDeliveryHtml(matchingProduct,index,cartItem){
   let html=``;
@@ -104,7 +103,7 @@ function generateDeliveryHtml(matchingProduct,index,cartItem){
 
 
 // Initial render
-renderCartItems();
+// renderCartItems();
 
 
 function update(productId){
@@ -173,9 +172,12 @@ document.querySelectorAll('.js-delivery-option')
   option.addEventListener('click',()=>{
     const {productId,deliveryOptionId}=option.dataset;
 
-updateDeliveryOption(productId,deliveryOptionId)
+updateDeliveryOption(productId,deliveryOptionId);
+renderCartItems();
   });
 
 })
+}
 
+renderCartItems();
 
