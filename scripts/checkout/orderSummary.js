@@ -1,8 +1,9 @@
 // checkout.js
 import { cart,updateDeliveryOption, deleteCartItem,checkoutItemsQuantity,updateQuantity,saveToLocalStorage} from '../../data/cart.js';
-import { products } from '../../data/products.js';
+import { products , getProduct} from '../../data/products.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
-import { deliveryOptions } from '../../data/deliveryOptions.js';
+import { deliveryOptions, getDeliveryOption} from '../../data/deliveryOptions.js';
+import { renderPaymentSummary } from './paymentSummary.js';
 
 const today= dayjs();
 
@@ -12,9 +13,9 @@ export function renderCartItems() {
   let cartSummaryHtml = '';
   cart.forEach((cartItem, index) => {
     const productId = cartItem.productId;
-    const matchingProduct = products.find((product) => product.id === productId);
+    const matchingProduct =getProduct(productId);
     const deliveryOptionId = cartItem.deliveryOptionId;
-    let deliveryoption = deliveryOptions.find((option) => option.id === deliveryOptionId);
+    let deliveryoption = getDeliveryOption(deliveryOptionId);
     if (!deliveryoption) {
       console.error(`No delivery option found for ID: ${deliveryOptionId}`);
       deliveryoption = deliveryOptions[0]; // Use the first option as a fallback
@@ -61,8 +62,10 @@ export function renderCartItems() {
     link.addEventListener('click', () => {
       const productId = link.dataset.productId;
       deleteCartItem(productId);
-      document.querySelector(`.cart-item-container-${productId}`).innerHTML='';
-      document.querySelector('.return-to-home-link').innerHTML=checkoutItemsQuantity();
+      renderPaymentSummary();
+      renderCartItems();
+     // document.querySelector(`.cart-item-container-${productId}`).innerHTML='';
+     // document.querySelector('.return-to-home-link').innerHTML=checkoutItemsQuantity();
      // renderCartItems(); // Re-render the cart after deletion
     });
   });
@@ -146,6 +149,7 @@ function handleQuantityUpdate(productId) {
 
   // Save changes
   save(productId);
+
 }
 
 // Attach event listeners to save buttons
@@ -153,6 +157,7 @@ document.querySelectorAll('.save-quantity').forEach((btn) => {
   btn.addEventListener('click', () => {
     const productId = btn.dataset.productId;
     handleQuantityUpdate(productId);
+    renderPaymentSummary();
   });
 });
 
@@ -162,6 +167,8 @@ document.querySelectorAll('.quantity-input').forEach((input) => {
     if (event.key === 'Enter') {
       const productId = input.dataset.productId;
       handleQuantityUpdate(productId);
+      renderPaymentSummary();
+
     }
   });
 });
@@ -173,6 +180,7 @@ document.querySelectorAll('.js-delivery-option')
     const {productId,deliveryOptionId}=option.dataset;
 
 updateDeliveryOption(productId,deliveryOptionId);
+renderPaymentSummary();
 renderCartItems();
   });
 
