@@ -4,12 +4,15 @@ import { products , getProduct} from '../../data/products.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import { deliveryOptions, getDeliveryOption} from '../../data/deliveryOptions.js';
 import { renderPaymentSummary } from './paymentSummary.js';
+import {renderCheckoutHeader} from './checkoutHeader.js';
 
-const today= dayjs();
+
 
 
 
 export function renderCartItems() {
+  const returnHomeLink=document.querySelector('.return-to-home-link');
+    const today= dayjs();
   let cartSummaryHtml = '';
   cart.forEach((cartItem, index) => {
     const productId = cartItem.productId;
@@ -62,7 +65,8 @@ export function renderCartItems() {
     link.addEventListener('click', () => {
       const productId = link.dataset.productId;
       deleteCartItem(productId);
-      renderPaymentSummary();
+      renderCheckoutHeader();
+        renderPaymentSummary();
       renderCartItems();
      // document.querySelector(`.cart-item-container-${productId}`).innerHTML='';
      // document.querySelector('.return-to-home-link').innerHTML=checkoutItemsQuantity();
@@ -119,6 +123,8 @@ updateBtn.forEach((link)=>{
   link.addEventListener('click',()=>{
     const productId = link.dataset.productId;
     update(productId);
+    // renderCheckoutHeader();
+
   });
 });
 
@@ -149,6 +155,8 @@ function handleQuantityUpdate(productId) {
 
   // Save changes
   save(productId);
+  renderCheckoutHeader();
+
 
 }
 
@@ -166,20 +174,19 @@ document.querySelectorAll('.quantity-input').forEach((input) => {
   input.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
       const productId = input.dataset.productId;
-      handleQuantityUpdate(productId);
-      renderPaymentSummary();
+      handleQuantityUpdate(productId);    
+       renderPaymentSummary();
 
     }
   });
 });
-document.querySelector('.return-to-home-link').innerHTML=checkoutItemsQuantity();
 
 document.querySelectorAll('.js-delivery-option')
 .forEach((option)=>{
   option.addEventListener('click',()=>{
     const {productId,deliveryOptionId}=option.dataset;
 
-updateDeliveryOption(productId,deliveryOptionId);
+updateDeliveryOption(productId,deliveryOptionId);      
 renderPaymentSummary();
 renderCartItems();
   });
@@ -187,5 +194,5 @@ renderCartItems();
 })
 }
 
-renderCartItems();
+// renderCartItems();
 

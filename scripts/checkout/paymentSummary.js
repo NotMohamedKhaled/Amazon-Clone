@@ -1,4 +1,4 @@
-import { cart } from "../../data/cart.js";
+import { cart, checkoutItemsQuantity} from "../../data/cart.js";
 import { getProduct } from "../../data/products.js";
 import { getDeliveryOption } from "../../data/deliveryOptions.js";
 
@@ -23,7 +23,7 @@ export function renderPaymentSummary(){
             </div>
 
             <div class="payment-summary-row">
-                <div>Items (3):</div>
+                <div>Items ${checkoutItemsQuantity()}:</div>
                 <div class="payment-summary-money">$${(Math.round(productPriceCents)/100).toFixed(2)}</div>
             </div>
 

@@ -1,14 +1,15 @@
+import {renderCheckoutHeader} from '../scripts/checkout/checkoutHeader.js'
 export let cart = JSON.parse(localStorage.getItem('cart')) || [
- { productId: "1dsd",
-  quantity: 2,
-  deliveryOptionId: '2'
- },
- {
-  productId: "2ds",
-  quantity: 1,
-  deliveryOptionId: '1'
+//  { productId: "1dsd",
+//   quantity: 2,
+//   deliveryOptionId: '2'
+//  },
+//  {
+//   productId: "2ds",
+//   quantity: 1,
+//   deliveryOptionId: '1'
 
- }
+//  }
 ];
 
 export function saveToLocalStorage() {
@@ -31,12 +32,13 @@ export function addToCart(currentProduct,dropdownValue){
       cart.push({
         productId: currentProduct,
         quantity: dropdownValue,
-        deliveryOptionId: '2',
+        deliveryOptionId: '1',
         // Add additional product details here if needed
        
       });
     }
     saveToLocalStorage();
+
    }
 
 
@@ -45,6 +47,8 @@ cart.forEach((cartItem,index)=>{
     if(cartItem.productId===productId){
        cart.splice(index,1);
         saveToLocalStorage();
+        // renderCheckoutHeader();
+
         return;
     }
 })
@@ -66,6 +70,7 @@ cart.forEach((cartItem,index)=>{
       if (productId === cartItem.productId) {
         matchingItem = cartItem;
       }
+      
     });
   
     matchingItem.quantity = newQuantity;
@@ -74,7 +79,8 @@ cart.forEach((cartItem,index)=>{
 
     document.querySelector('.return-to-home-link').innerHTML=checkoutItemsQuantity();
 
-  
+    // renderCheckoutHeader();
+
     saveToLocalStorage();
   }
 
