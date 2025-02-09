@@ -1,16 +1,21 @@
 import {renderCheckoutHeader} from '../scripts/checkout/checkoutHeader.js'
-export let cart = JSON.parse(localStorage.getItem('cart')) || [
-//  { productId: "1dsd",
-//   quantity: 2,
-//   deliveryOptionId: '2'
-//  },
-//  {
-//   productId: "2ds",
-//   quantity: 1,
-//   deliveryOptionId: '1'
-
-//  }
-];
+export let cart;
+loadFromStorage();
+export function loadFromStorage(){
+  cart = JSON.parse(localStorage.getItem('cart')) || [
+    //  { productId: "1dsd",
+    //   quantity: 2,
+    //   deliveryOptionId: '2'
+    //  },
+    //  {
+    //   productId: "2ds",
+    //   quantity: 1,
+    //   deliveryOptionId: '1'
+    
+    //  }
+    ];
+    
+}
 
 export function saveToLocalStorage() {
   localStorage.setItem('cart', JSON.stringify(cart));
