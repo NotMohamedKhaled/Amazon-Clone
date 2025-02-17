@@ -35,7 +35,7 @@ export function renderCartItems() {
             <img class="product-image" src="${matchingProduct.image}">
             <div class="cart-item-details">
               <div class="product-name">${matchingProduct.name}</div>
-              <div class="product-price">$${(matchingProduct.priceCents / 100).toFixed(2)}</div>
+              <div class="product-price">${matchingProduct.getPrice()}</div>
               <div class="product-quantity">
                 <span>Quantity: <span class="quantity-label js-quantity-label-${matchingProduct.id}">${cartItem.quantity}</span></span>
                 <span class="update-quantity-link link-primary" data-product-id="${productId}">Update</span>
