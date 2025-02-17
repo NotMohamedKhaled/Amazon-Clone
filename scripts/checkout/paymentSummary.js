@@ -55,4 +55,3 @@ export function renderPaymentSummary(){
     `;
     document.querySelector('.payment-summary').innerHTML=paymentSummaryHtml;
 }
-renderPaymentSummary();

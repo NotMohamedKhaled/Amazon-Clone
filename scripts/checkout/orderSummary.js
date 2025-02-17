@@ -29,7 +29,7 @@ export function renderCartItems() {
     
 
       cartSummaryHtml += `
-        <div class="cart-item-container-${matchingProduct.id}">
+        <div class="cart-item-container cart-item-container-${matchingProduct.id}">
           <div class="delivery-date">Delivery date: ${dateHtml}</div>
           <div class="cart-item-details-grid">
             <img class="product-image" src="${matchingProduct.image}">
@@ -41,7 +41,8 @@ export function renderCartItems() {
                 <span class="update-quantity-link link-primary" data-product-id="${productId}">Update</span>
                 <input type="number" min="1" max="49" class="quantity-input js-quantity-input-${matchingProduct.id}"  data-product-id="${productId}">
                 <span class="save-quantity link-primary" data-product-id="${productId}">Save</span>
-                <span class="delete-quantity-link link-primary" data-product-id="${productId}">Delete</span>
+                <span class="delete-quantity-link js-delete-link-${matchingProduct.id}
+                 link-primary" data-product-id="${productId}">Delete</span>
               </div>
               <p class="alert js-alert-${matchingProduct.id}"></p>
             </div>
