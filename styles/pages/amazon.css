@@ -77,6 +77,9 @@
   display: flex;
   flex-direction: column;
 }
+.sizeChartLink{
+  text-decoration: none;
+}
 
 .product-image-container {
   display: flex;

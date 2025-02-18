@@ -45,7 +45,7 @@ export function amazonMain(){
                   <option value="10">10</option>
                 </select>
               </div>
-    
+                  ${item.extraInfoHTML()}
               <div class="product-spacer"></div>
     
               <div class="added-to-cart added-to-cart-${item.id}">
