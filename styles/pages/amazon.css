@@ -80,6 +80,13 @@
 .sizeChartLink{
   text-decoration: none;
 }
+.warrantyLink{
+  text-decoration: none;
+}
+.instructionLink{
+  text-decoration: none;
+
+}
 
 .product-image-container {
   display: flex;

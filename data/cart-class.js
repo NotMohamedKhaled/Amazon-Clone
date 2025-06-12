@@ -117,19 +117,11 @@ class Cart{
 
 
 
-const cart = new Cart('cart-oop');
-const businessCart = new Cart('buisnessCart-oop');
-cart.localStorageKey='cart-oasasasop';
-
-
-// businessCart.localStorageKey='cart-business';
-
-// cart.loadFromStorage();
-// businessCart.loadFromStorage();
-cart.addToCart('assas', 12);
-console.log(cart);
-console.log(businessCart);
-
+export const cart=[
+  
+].map((cartItems)=>{
+return new cart(cartItems);
+});
 
 
 
