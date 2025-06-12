@@ -1,4 +1,4 @@
-import { checkoutItemsQuantity } from "../../data/cart.js";
+import { cart } from "../../data/cart-class.js";
 
 
 export function amazonHeader(){
@@ -29,7 +29,7 @@ export function amazonHeader(){
 
         <a class="cart-link header-link" href="checkout.html">
           <img class="cart-icon" src="images/icons/cart-icon.png">
-          <div class="cart-quantity ">${checkoutItemsQuantity()}</div>
+          <div class="cart-quantity ">${cart.checkoutItemsQuantity()}</div>
           <div class="cart-text">Cart</div>
         </a>
       </div>

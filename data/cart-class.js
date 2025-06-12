@@ -10,16 +10,7 @@ class Cart{
 
     #loadFromStorage(){
         this.cartItems = JSON.parse(localStorage.getItem(this.#localStorageKey)) || [
-           { productId: "1dsd",
-            quantity: 2,
-            deliveryOptionId: '2'
-           },
-           {
-            productId: "2ds",
-            quantity: 1,
-            deliveryOptionId: '1'
-          
-           }
+    
           ];
           
       }
@@ -71,6 +62,7 @@ class Cart{
               this.cartItems.forEach((cartItem)=>{
               cartQuantityLength += cartItem.quantity;
               })
+              
              return cartQuantityLength;
           };
     
@@ -117,12 +109,7 @@ class Cart{
 
 
 
-export const cart=[
-  
-].map((cartItems)=>{
-return new cart(cartItems);
-});
-
+export const cart = new Cart('cart-oop');
 
 
 

@@ -1,8 +1,6 @@
-import {cart, addToCart,checkoutItemsQuantity} from '../../data/cart.js';
+import {cart} from '../../data/cart-class.js';
 import {products} from '../../data/products.js';
-import { UpdateHeaders } from '../updateHeaders.js';
 import { amazonHeader } from './amazonheader.js';
-import { renderCheckoutHeader } from '../checkout/checkoutHeader.js';
 
 export function amazonMain(){
 
@@ -103,7 +101,7 @@ export function amazonMain(){
           return;
         }
     
-        addToCart(currentProduct,dropdownValue);
+        cart.addToCart(currentProduct,dropdownValue);
         addedToCartAppear(currentProduct,addedToCart);
         console.log(919);
         amazonHeader();
