@@ -1,11 +1,10 @@
 // checkout.js
 import { cart} from '../../data/cart-class.js';
-import {  getProduct} from '../../data/products.js';
+import {  getProduct, loadProducts} from '../../data/products.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import { deliveryOptions, getDeliveryOption} from '../../data/deliveryOptions.js';
 import { renderPaymentSummary } from './paymentSummary.js';
 import {renderCheckoutHeader} from './checkoutHeader.js';
-
 
 
 

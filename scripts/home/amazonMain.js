@@ -1,9 +1,11 @@
 import {cart} from '../../data/cart-class.js';
-import {products} from '../../data/products.js';
+import {products, loadProducts} from '../../data/products.js';
 import { amazonHeader } from './amazonheader.js';
 
-export function amazonMain(){
 
+
+
+export function amazonMain(){
     const gridd= document.querySelector('.products-grid');
     let gridHtml='';
     products.forEach((item)=>{

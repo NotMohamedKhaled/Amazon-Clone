@@ -1,5 +1,5 @@
 import { cart} from "../../data/cart-class.js";
-import { getProduct } from "../../data/products.js";
+import { getProduct, loadProducts } from "../../data/products.js";
 import { getDeliveryOption } from "../../data/deliveryOptions.js";
 
 export function renderPaymentSummary(){
@@ -7,7 +7,11 @@ export function renderPaymentSummary(){
     let shippingPriceCents=0;
     cart.cartItems.forEach((cartItem) => {
       const product=  getProduct(cartItem.productId);
-      productPriceCents+=product.priceCents * cartItem.quantity;
+      if (!product) {
+    console.warn(`Product with id ${cartItem.productId} not found.`);
+    return; // skip this cart item
+  }
+      productPriceCents+=Number(product.priceCents) * cartItem.quantity;
       const deliveryOption = getDeliveryOption(cartItem.deliveryOptionId);
       shippingPriceCents+=deliveryOption.priceCents;
     });

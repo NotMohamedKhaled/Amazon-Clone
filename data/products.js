@@ -1,3 +1,5 @@
+export let products=[];
+
 export function getProduct(productId){
    let matchingItem;
     
@@ -69,11 +71,33 @@ export class Appliances extends Product{
   }
 }
 
-// const date = new Date();
-// console.log(date.toLocaleTimeString());
 
-const date = new Date();
+export function loadProducts(fun){ 
+  const xhr= new XMLHttpRequest();
+  xhr.addEventListener('load',()=>{
 
+  products=JSON.parse(xhr.response).map((productDetails)=>{
+  if(productDetails.type ==='clothing'){
+
+    return new Clothing(productDetails);
+
+  }else if(productDetails.keywords.includes("appliances")){ 
+    return new Appliances(productDetails);
+  }
+  else{
+    return new Product(productDetails);
+
+  }
+});
+
+fun();
+  });
+xhr.open('GET', 'https://supersimplebackend.dev/products');
+xhr.send();
+}
+// loadProducts();
+
+/*
 export const products = [
   {
     id: "1dsd",
@@ -748,3 +772,4 @@ export const products = [
 
   }
 });
+*/

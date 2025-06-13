@@ -1,5 +1,5 @@
 import { cart } from "../../data/cart-class.js";
-
+import { loadProducts } from "../../data/products.js";
 
 export function amazonHeader(){
 
