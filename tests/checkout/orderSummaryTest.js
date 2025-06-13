@@ -1,28 +1,33 @@
 import { renderCartItems } from "../../scripts/checkout/orderSummary.js";
 import { loadFromStorage,cart } from "../../data/cart.js";
+import { loadProducts } from "../../data/products.js";
 
 
 describe('test suite: renderCartItem ', ()=>{
-    const p1='1dsd';
-    const p2='2ds';  
+    const p1='e43638ce-6aa0-4b85-b27f-e1d07eb678c66';
+    const p2='15b6fc6f-327a-4ec4-896f-486349e85a3d';  
+    beforeAll((done)=>{
+        loadProducts();
+        done();
+    });
     beforeEach(() => {
-        // Set up the test container
+        
+        spyOn(localStorage,'setItem');
         document.querySelector('.js-test-container').innerHTML = `
             <div class="order-summary"></div>
             <div class="payment-summary"></div>
-            <div class="checkout-header js-checkout-header">
 
         `;
         // Mock localStorage.getItem to return the cart data
         spyOn(localStorage, 'getItem').and.callFake(() => {
             return JSON.stringify([
                 {
-                    productId: "1dsd",
+                    productId: "e43638ce-6aa0-4b85-b27f-e1d07eb678c66",
                     quantity: 4,
                     deliveryOptionId: '2'
                 },
                 {
-                    productId: "2ds",
+                    productId: "15b6fc6f-327a-4ec4-896f-486349e85a3d",
                     quantity: 1,
                     deliveryOptionId: '1'
                 }

@@ -1,4 +1,3 @@
-export let products=[];
 
 export function getProduct(productId){
    let matchingItem;
@@ -71,6 +70,7 @@ export class Appliances extends Product{
   }
 }
 
+export let products=[];
 
 export function loadProducts(fun){ 
   const xhr= new XMLHttpRequest();
@@ -89,7 +89,7 @@ export function loadProducts(fun){
 
   }
 });
-
+console.log('load products');
 fun();
   });
 xhr.open('GET', 'https://supersimplebackend.dev/products');
