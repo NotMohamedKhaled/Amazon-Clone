@@ -43,6 +43,7 @@ export function addToCart(currentProduct,dropdownValue){
       });
     }
     saveToLocalStorage();
+    console.log('Added with cart');
 
    }
 
@@ -111,4 +112,10 @@ xhr.addEventListener('load',()=>{
    
     xhr.open('GET', 'https://supersimplebackend.dev/cart');
     xhr.send();
+  }
+
+  export async function loadCartFetch(){
+    const response = await fetch('https://supersimplebackend.dev/cart');
+    const text = await response.text();
+    console.log(text);
   }

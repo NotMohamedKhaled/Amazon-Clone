@@ -1,5 +1,6 @@
 
 export function getProduct(productId){
+  
    let matchingItem;
     
       products.forEach((product) => {
@@ -63,40 +64,37 @@ export class Appliances extends Product{
   }
 
   extraInfoHTML(){
-        return `<a class="instructionLink" href="${this.instructionLink}" target="_blank">Instruction</a>
-            <a class="warrantyLink" href="${this.warrantyLink}" target="_blank">Warranty</a>
-        `
-
+        // return `<a class="instructionLink" href="${this.instructionLink}" target="_blank">Instruction</a>
+        //     <a class="warrantyLink" href="${this.warrantyLink}" target="_blank">Warranty</a>
+        // `
+    return '';
   }
 }
 
 export let products=[];
 
-export function loadProductsFetch(){
-  const promise= fetch('https://supersimplebackend.dev/products')
-  .then((response)=>{
-    return response.json();
-  }).then((productsData)=>{
-    products=productsData.map((productDetails)=>{
-  if(productDetails.type ==='clothing'){
+export async function loadProductsFetch(){
+  const promise= await fetch('https://supersimplebackend.dev/products');
 
-    return new Clothing(productDetails);
+  const rawProducts= await promise.json();
 
-  }else if(productDetails.keywords.includes("appliances")){ 
+  products=rawProducts.map((productDetails)=>{
+   if(productDetails.type ==='clothing'){
+
+     return new Clothing(productDetails);
+
+   }else if(productDetails.keywords.includes("appliances")){ 
     return new Appliances(productDetails);
-  }
-  else{
-    return new Product(productDetails);
+   }
+   else{
+     return new Product(productDetails);
 
   }
-  });
-  console.log('load products')
-  }).catch((error)=>{
-    console.log('erooreoroeoroeoroer');
-  });
+   });
 
-  return promise;
-}
+   console.log('load products')
+
+ }
 // loadProductsFetch();
 
 

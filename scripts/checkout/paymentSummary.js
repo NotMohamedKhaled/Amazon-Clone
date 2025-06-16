@@ -19,8 +19,7 @@ export function renderPaymentSummary(){
     const totalBeforeTaxCents = productPriceCents + shippingPriceCents;
     const taxCents = totalBeforeTaxCents *0.1;
     const totalCents = taxCents+totalBeforeTaxCents;
-    console.log(productPriceCents);
-    console.log(shippingPriceCents);
+    
 
     const paymentSummaryHtml= `
             <div class="payment-summary-title">
@@ -65,7 +64,7 @@ export function renderPaymentSummary(){
 
     try{
         const response =await fetch('https://supersimplebackend.dev/orders',{
-         method: 'post',
+         method: 'POST',
          headers:{
          'Content-Type': 'application/json'
          },
@@ -76,6 +75,7 @@ export function renderPaymentSummary(){
 
         const order =await response.json();
         addOrder(order);
+        cart.clearCart();
 
         }catch{
             console.log("error")

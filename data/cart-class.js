@@ -40,7 +40,7 @@ class Cart{
           });
         }
         this.saveToLocalStorage();
-    
+    console.log('Added with claaaas');
        };
     
     
@@ -55,6 +55,12 @@ class Cart{
         })
         
         };
+        clearCart(){
+       this.cartItems=[];
+       this.saveToLocalStorage();
+       console.log('cleared cart');
+       console.log(cart);
+        }
     
     
         checkoutItemsQuantity(){
