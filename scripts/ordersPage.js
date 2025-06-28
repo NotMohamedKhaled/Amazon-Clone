@@ -3,13 +3,13 @@ import { getProduct, loadProductsFetch } from "../data/products.js";
 import { cart } from "../data/cart-class.js";
 console.log(orders);
 
+    innializePage();
 
 
    async function innializePage() {
         await loadProductsFetch();
         renderOrdersPage();
     }
-    innializePage();
 
  function buyAgain(productId){
     console.log(productId);
@@ -26,6 +26,7 @@ function formatOrderDate(orderDate){
 
 function renderOrderProducts(products){
       let productsInOrderHtml='';
+      
            products.forEach((product)=>{
 
             const currentProduct = getProduct(product.productId); 
